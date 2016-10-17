@@ -13,6 +13,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
     g11=new double* [N];
     g12=new double* [N];
     g22=new double* [N];
+    
     for (int i = 0; i < N; ++i)
     {
         U[i]=new double [N];
@@ -21,6 +22,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
         g12[i]=new double [N];
         g22[i]=new double [N];
     }
+    
     for (int i = 0; i < N; ++i)
     {
         for (int j = 0; j  < N; ++j)
@@ -62,6 +64,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             }
         }
     }
+    
     for (int i=0; i<N; i++)
     {
         for (int j=0; j<N; j++)
@@ -70,6 +73,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             V[i][j]=(xvel[i][j]*ex[i][j]+yvel[i][j]*ey[i][j]);
         }
     }
+    
     for (int i=0; i<N; i++)
     {
         for (int j=0; j<N; j++)
@@ -82,6 +86,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             Estar2[i][j][2]=(yvel[i][j]*V[i][j]+Press[i][j]*ey[i][j])/JC[i][j];
         }
     }
+    
     for(int k=0;k<3; k++)
     {
         for (int i=1; i<N-1; i++)
@@ -93,6 +98,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             }
         }
     }
+    
     for (int i=0; i<N; i++)
     {
         for (int j=0; j<N; j++)
@@ -140,6 +146,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
         exhx[i][N-1]=0.5*(ex[i][N-2]+ex[i][N-1]);
         eyhx[i][N-1]=0.5*(ey[i][N-2]+ey[i][N-1]);
     }
+    #pragma omp parallel for schedule(guided,8)
     for (int i=0; i<N; i++)
     {
         for (int j=0; j<N; j++)
@@ -182,6 +189,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             dEsv2[i][j][2]=(Estarv2[i][j][2]-Estarv2[i-1][j][2]);
         }
     }
+    #pragma omp parallel for schedule(guided,8)
     for (int i=1; i<N-1; i++)
     {
         for (int j=1; j<N-1;j++)

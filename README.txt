@@ -6,6 +6,6 @@ Type the following command without quotes:
 
 Three files will be generated:
 
-xvel.csv : contains x-velocity
-yvel.csv : contains y-velocity
+xvel.vtk : contains x-velocity
+yvel.vtk : contains y-velocity
 
