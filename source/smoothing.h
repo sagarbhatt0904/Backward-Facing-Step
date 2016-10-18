@@ -2,15 +2,20 @@
 
 #include"TRI.h"
 
-void smoothing(int N, double ep, double** rcs, double** rus, double** rvs)
+void smoothing(int N, double ep, vector<vector<double> > &rcs, vector<vector<double> > &rus, vector<vector<double> > &rvs)
 {
-    double* a; double* b; double* c; double* dc; double* du; double* dv;double** Dummyu;double** Dummyc;double** Dummyv;
-    a=new double [N];b=new double [N];c=new double [N];dc=new double [N];du=new double [N];dv=new double [N]; Dummyu=new double* [N];Dummyc=new double* [N];Dummyv=new double* [N];
-    for (int i = 0; i < N; ++i)
-    {
-        Dummyu[i]=new double [N];Dummyc[i]=new double [N];Dummyv[i]=new double [N];
-    }
-   //function[rcs_r,rus_r,rvs_r]=smoothing(N,ep,rcs,rus,rvs)
+    vector<vector<double> > Dummyu (N,vector<double>(N, 0));
+    vector<vector<double> > Dummyv (N,vector<double>(N, 0));
+    vector<vector<double> > Dummyc (N,vector<double>(N, 0));
+    
+    vector<double> a(N);
+    vector<double> b(N);
+    vector<double> c(N);
+    vector<double> du(N);
+    vector<double> dv(N);
+    vector<double> dc(N);
+
+
     for (int i = 0; i < N; ++i)
     {
         a[i]=0;

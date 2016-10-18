@@ -3,7 +3,7 @@
 
 // computing dissipation
 
-void Diss(int N,double eps,double** rho1,double** rho2,double** Press,double** xvel,double** yvel,double** rcs,double** rus,double** rvs)
+void Diss(int N,double eps,vector<vector<double> > &rho1,vector<vector<double> > &rho2,vector<vector<double> > &Press,vector<vector<double> > &xvel,vector<vector<double> > &yvel,vector<vector<double> > &rcs,vector<vector<double> > &rus,vector<vector<double> > &rvs)
 
 { double D1_c[N][N], D2_c[N][N],D1_u[N][N], D2_u[N][N],D1_v[N][N], D2_v[N][N], Diss_c[N][N],Diss_u[N][N],Diss_v[N][N];
 

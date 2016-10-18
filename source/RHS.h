@@ -4,25 +4,17 @@
 #include"smoothing.h"
 
 
-void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** zx,double** ey,double** ex,double** zy,double Re,double eps,double ep,double** rcs,double** rus,double** rvs, double** rho1, double** rho2)
+void RHS(int N,vector<vector<double> > &JC,vector<vector<double> > &xvel,vector<vector<double> > &yvel,vector<vector<double> > &Press,vector<vector<double> > &zx,vector<vector<double> > &ey,vector<vector<double> > &ex,vector<vector<double> > &zy,double Re,double eps,double ep,vector<vector<double> > &rcs,vector<vector<double> > &rus,vector<vector<double> > &rvs, vector<vector<double> > &rho1, vector<vector<double> > &rho2)
 {
    
-    double** U;double** V; double** g11;double** g22;double** g12;double JChx[N][N], JChy[N][N], zxhx[N][N], zxhy[N][N], zyhx[N][N], zyhy[N][N], exhx[N][N], exhy[N][N], eyhx[N][N], eyhy[N][N], g11hx[N][N], g11hy[N][N], g12hx[N][N], g12hy[N][N], g22hx[N][N], g22hy[N][N], Estar1[N][N][3], Estar2[N][N][3], Estarv1[N][N][3], Estarv2[N][N][3], dEs1[N][N][3], dEs2[N][N][3], dEsv1[N][N][3], dEsv2[N][N][3];
-    U=new double* [N];
-    V=new double* [N];
-    g11=new double* [N];
-    g12=new double* [N];
-    g22=new double* [N];
+    vector<vector<double> > U (N,vector<double>(N, 0));
+    vector<vector<double> > V (N,vector<double>(N, 0));
+    vector<vector<double> > g11 (N,vector<double>(N, 0));
+    vector<vector<double> > g22 (N,vector<double>(N, 0));
+    vector<vector<double> > g12 (N,vector<double>(N, 0));
     
-    for (int i = 0; i < N; ++i)
-    {
-        U[i]=new double [N];
-        V[i]=new double [N];
-        g11[i]=new double [N];
-        g12[i]=new double [N];
-        g22[i]=new double [N];
-    }
-    
+    double JChx[N][N], JChy[N][N], zxhx[N][N], zxhy[N][N], zyhx[N][N], zyhy[N][N], exhx[N][N], exhy[N][N], eyhx[N][N], eyhy[N][N], g11hx[N][N], g12hx[N][N], g12hy[N][N],  g22hy[N][N], Estar1[N][N][3], Estar2[N][N][3], Estarv1[N][N][3], Estarv2[N][N][3], dEs1[N][N][3], dEs2[N][N][3], dEsv1[N][N][3], dEsv2[N][N][3];
+   
     for (int i = 0; i < N; ++i)
     {
         for (int j = 0; j  < N; ++j)
@@ -46,10 +38,10 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             exhy[i][j]=0;
             eyhy[i][j]=0;
             g11hx[i][j]=0;
-            g11hy[i][j]=0;
+            // g11hy[i][j]=0;
             g12hx[i][j]=0;
             g12hy[i][j]=0;
-            g22hx[i][j]=0;
+            // g22hx[i][j]=0;
             g22hy[i][j]=0;
             for (int k = 0; k < 3; ++k)
             {
@@ -146,15 +138,15 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
         exhx[i][N-1]=0.5*(ex[i][N-2]+ex[i][N-1]);
         eyhx[i][N-1]=0.5*(ey[i][N-2]+ey[i][N-1]);
     }
-    #pragma omp parallel for schedule(guided,8)
+    // #pragma omp parallel for schedule(guided,8)
     for (int i=0; i<N; i++)
     {
         for (int j=0; j<N; j++)
         {
             g11hx[i][j]=(pow(zxhx[i][j],2))+(pow(zyhx[i][j],2));
             g12hx[i][j]=zxhx[i][j]*exhx[i][j]+zyhx[i][j]*eyhx[i][j];
-            g22hx[i][j]=(pow(exhx[i][j],2))+(pow(eyhx[i][j],2));
-            g11hy[i][j]=(pow(zxhy[i][j],2))+(pow(zyhy[i][j],2));
+            // g22hx[i][j]=(pow(exhx[i][j],2))+(pow(eyhx[i][j],2));
+            // g11hy[i][j]=(pow(zxhy[i][j],2))+(pow(zyhy[i][j],2));
             g12hy[i][j]=zxhy[i][j]*exhy[i][j]+zyhy[i][j]*eyhy[i][j];
             g22hy[i][j]=(pow(exhy[i][j],2))+(pow(eyhy[i][j],2));
         }
@@ -164,7 +156,7 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
         for (int j=0; j<N-1; j++)
         {
             Estarv1[i][j][0]=0;
-            Estarv1[i][j][1]=(g11hx[i][j]*(xvel[i][j+1]-xvel[i][j])+g12hx[i][j]*(xvel[i+1][j]-xvel[i][j]))/(Re*JChx[i][j]);
+             Estarv1[i][j][1]=(g11hx[i][j]*(xvel[i][j+1]-xvel[i][j])+g12hx[i][j]*(xvel[i+1][j]-xvel[i][j]))/(Re*JChx[i][j]);
             Estarv1[i][j][2]=(g11hx[i][j]*(yvel[i][j+1]-yvel[i][j])+g12hx[i][j]*(yvel[i+1][j]-yvel[i][j]))/(Re*JChx[i][j]);
         }
     }
@@ -189,14 +181,14 @@ void RHS(int N,double** JC,double** xvel,double** yvel,double** Press,double** z
             dEsv2[i][j][2]=(Estarv2[i][j][2]-Estarv2[i-1][j][2]);
         }
     }
-    #pragma omp parallel for schedule(guided,8)
+    // #pragma omp parallel for schedule(guided,8)
     for (int i=1; i<N-1; i++)
     {
         for (int j=1; j<N-1;j++)
         {
-            rcs[i][j]=(dEs1[i][j][1]+dEs2[i][j][1]-dEsv1[i][j][1]-dEsv2[i][j][1])*JC[i][j];
-            rus[i][j]=(dEs1[i][j][2]+dEs2[i][j][2]-dEsv1[i][j][2]-dEsv2[i][j][2])*JC[i][j];
-            rvs[i][j]=(dEs1[i][j][3]+dEs2[i][j][3]-dEsv1[i][j][3]-dEsv2[i][j][3])*JC[i][j];
+            rcs[i][j]=(dEs1[i][j][0]+dEs2[i][j][0]-dEsv1[i][j][0]-dEsv2[i][j][0])*JC[i][j];
+            rus[i][j]=(dEs1[i][j][1]+dEs2[i][j][1]-dEsv1[i][j][1]-dEsv2[i][j][1])*JC[i][j];
+            rvs[i][j]=(dEs1[i][j][2]+dEs2[i][j][2]-dEsv1[i][j][2]-dEsv2[i][j][2])*JC[i][j];
         }
     }
     spectralradius(N, JC, U, V, g11, g22,  rho1,  rho2);

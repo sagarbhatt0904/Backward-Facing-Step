@@ -1,3 +1,3 @@
 all:
 
-	g++ -O2 -fopenmp timer.C bkwd_step.cpp -o bkwd
+	g++ -O2 -fopenmp bkwd_step.cpp -o bkwd

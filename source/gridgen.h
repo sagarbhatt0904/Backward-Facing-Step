@@ -2,9 +2,9 @@
 
 
 // Intializing the grid
-void gridgen(int N, double st, double xmax, double ymax, double** x, double** y)
+void gridgen(int N, double st, double xmax, double ymax, vector<vector<double> > &x, vector<vector<double> > &y)
 {
-    double x1[N],y1[N],a1;
+    double x1[N],y1[N];
 	if (st==1)
 	{
 	    double dx=xmax/(N-1);
@@ -14,7 +14,7 @@ void gridgen(int N, double st, double xmax, double ymax, double** x, double** y)
 	    for (int i = 1; i < N; ++i)
 	    {
 	    	x1[i]=x1[i-1]+dx;
-	    	y1[i]=y1[i-1]+dx;
+	    	y1[i]=y1[i-1]+dy;
 	    }
 	 }
      else

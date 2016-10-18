@@ -1,7 +1,7 @@
 
 
 // Tridiagonal Matrix Solver
-void TRI(int ibeg,int iend,double* aa,double* bb,double* cc,double* dd)
+void TRI(int ibeg,int iend,vector<double> &aa,vector<double> &bb,vector<double> &cc,vector<double> &dd)
 {
 	for(int i=ibeg; i<iend; i++)
 	{

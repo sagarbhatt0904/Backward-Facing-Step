@@ -2,11 +2,9 @@
 
 using namespace std;
 /*Initializing U,V, Pressure*/
-void init(int N,double** x,double** y,double** xvel,double** xvel1,double** yvel,double** yvel1,double** Press,double** dummyu)
+void init(int N,vector<vector<double> > &x,vector<vector<double> > &y,vector<vector<double> > &xvel,vector<vector<double> > &xvel1,vector<vector<double> > &yvel,vector<vector<double> > &yvel1,vector<vector<double> > &Press,vector<vector<double> > &dummyu)
 {
-	
 
-	//function[xvel,yvel,Press,dummyu]=init(N,y)
 	/* Initializing U,V, P*/
 	int kl=0;
 	double xd[N][N];

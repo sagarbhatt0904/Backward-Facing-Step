@@ -1,16 +1,14 @@
 
 // Metric calculation
 
-void metric(int N,double** x,double** y,double** zx, double** zy,double** ex, double**ey,double** JC)
+void metric(int N, vector<vector<double> > &x, vector<vector<double> > &y, vector<vector<double> > &zx,  vector<vector<double> > &zy, vector<vector<double> > &ex,  vector<vector<double> > &ey, vector<vector<double> > &JC)
 {
 
-double** G;double** xz;double** ye;double** yz;double** xe; double** dummyG;
-G=new double* [N]; xz=new double* [N]; ye=new double* [N]; yz=new double* [N]; xe=new double* [N];
-
-for (int i=0; i<N; i++)
-{
-	G[i]=new double [N]; xz[i]=new double [N]; ye[i]=new double [N]; yz[i]=new double [N]; xe[i]=new double [N];
-}
+vector<vector<double> > G (N, vector<double>(N,  0));
+vector<vector<double> > xz (N, vector<double>(N,  0));
+vector<vector<double> > ye (N, vector<double>(N,  0));
+vector<vector<double> > yz (N, vector<double>(N,  0));
+vector<vector<double> > xe (N, vector<double>(N,  0));
 
 for (int i=1; i<N-1; i++)
 	{
@@ -27,7 +25,7 @@ for (int j=0; j<N; j++)
 	}
 
 for (int j=0; j<N; j++)
-   {
+   {	
 	    xe[N-1][j]=(x[N-1][j]-x[N-2][j]);
 	    ye[N-1][j]=(y[N-1][j]-y[N-2][j]);
     }
@@ -49,8 +47,8 @@ for (int i=0; i<N; i++)
 	}
 for (int i=0; i<N; i++)
 	{
-	    yz[i][N]=(y[i][N]-y[i][N-1]);
-	    xz[i][N]=(x[i][N]-x[i][N-1]);
+	    yz[i][N-1]=(y[i][N-1]-y[i][N-2]);
+	    xz[i][N-1]=(x[i][N-1]-x[i][N-2]);
 	}
 
 
