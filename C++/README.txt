@@ -8,4 +8,5 @@ Three files will be generated:
 
 xvel.vtk : contains x-velocity
 yvel.vtk : contains y-velocity
+norm.csv : norm of residual
 

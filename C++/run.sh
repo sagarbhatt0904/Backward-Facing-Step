@@ -1,9 +1,7 @@
 #!/bin/sh
 
-echo 'Running Navier-stokes Solver for Backward-Facing Step problem'
-echo '\n'
-make -C source/
+g++ -O2 -Wall  ./src/main.cpp -lblas -fopenmp -o NS
 
-source/./bkwd
+./NS
 
-rm source/bkwd
+rm NS

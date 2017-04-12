@@ -1,8 +1,9 @@
-
+#include <omp.h>
 
 // Tridiagonal Matrix Solver
 void TRI(int ibeg,int iend,vector<double> &aa,vector<double> &bb,vector<double> &cc,vector<double> &dd)
 {
+    #pragma omp parallel for schedule(dynamic)
 	for(int i=ibeg; i<iend; i++)
 	{
 	    double r=aa[i]/bb[i-1];
@@ -12,6 +13,7 @@ void TRI(int ibeg,int iend,vector<double> &aa,vector<double> &bb,vector<double> 
 	}
 	dd[iend]=dd[iend]/bb[iend];
 
+    #pragma omp parallel for schedule(dynamic)
 	for(int i=iend-2;i>=ibeg;i--)
 	{
 	    dd[i]=(dd[i]-cc[i]*dd[i+1]/bb[i]);
